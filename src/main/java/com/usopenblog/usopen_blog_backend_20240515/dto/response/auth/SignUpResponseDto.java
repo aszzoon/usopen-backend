@@ -15,6 +15,7 @@ public class SignUpResponseDto extends ResponseDto {
 		super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
 	}
 
+	//DTO만 보고 반환하는 data 확인
 	public static ResponseEntity<SignUpResponseDto> success() {
 		SignUpResponseDto result = new SignUpResponseDto();
 		return ResponseEntity.status(HttpStatus.OK).body(result);

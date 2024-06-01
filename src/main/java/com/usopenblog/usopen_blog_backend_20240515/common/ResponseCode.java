@@ -1,6 +1,8 @@
 package com.usopenblog.usopen_blog_backend_20240515.common;
 
+// response
 public interface ResponseCode {
+
 	// HTTP Status 200
 	String SUCCESS = "SU";
 

@@ -1,7 +1,5 @@
 package com.usopenblog.usopen_blog_backend_20240515.dto.request.auth;
 
-import org.hibernate.validator.constraints.Length;
-
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
