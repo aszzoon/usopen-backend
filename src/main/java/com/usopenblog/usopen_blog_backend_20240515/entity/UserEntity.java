@@ -22,7 +22,4 @@ public class UserEntity {
 	private String address;
 	private String addressDetail;
 	private String profileImage;
-
-
-
 }
