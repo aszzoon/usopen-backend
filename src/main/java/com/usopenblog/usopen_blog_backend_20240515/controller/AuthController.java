@@ -6,19 +6,22 @@ import com.usopenblog.usopen_blog_backend_20240515.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/vi/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
+//  @GetMapping("/test")
+//  public String test() {
+//    return "test";
+//  }
+
+
   private final AuthService authService;
 
-  @PostMapping("/sign=up")
+  @PostMapping("/sign-up")
   public ResponseEntity<? super SignUpResponseDto> signUp(
           @RequestBody @Valid SignUpRequestDto requestBody
   ) {

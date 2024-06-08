@@ -9,5 +9,4 @@ public interface AuthService {
   ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto Dto);
 
 
-
 }

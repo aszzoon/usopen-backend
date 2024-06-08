@@ -1,10 +1,6 @@
 package com.usopenblog.usopen_blog_backend_20240515.dto.request.auth;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +27,7 @@ public class SignUpRequestDto {
 
 	private String addressDetail;
 
-	@NotBlank @AssertTrue
+	@NotNull
+	@AssertTrue
 	private Boolean agreedPersonal;
 }

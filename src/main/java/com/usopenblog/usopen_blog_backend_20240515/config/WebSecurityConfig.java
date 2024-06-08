@@ -30,59 +30,59 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-	@Bean
-	protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity
-			.cors(cors -> cors
-					  .configurationSource(corsConfigrationSource())
-				 )
-			.csrf(CsrfConfigurer::disable)
-			.httpBasic(HttpBasicConfigurer::disable)
-			.sessionManagement(sessionManagement -> sessionManagement
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(request -> request
-									   .requestMatchers
-										   ("/", "/api/v1/auth/**", "/api/v1/search/**", "/file/**").permitAll()
-									   .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/*").permitAll()
-									   .anyRequest().authenticated()
-								  )
-			.exceptionHandling(exceptionHandling -> exceptionHandling
-								   .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
-							  )
-			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+  @Bean
+  protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity
+            .cors(cors -> cors
+                    .configurationSource(corsConfigrationSource())
+            )
+            .csrf(CsrfConfigurer::disable)
+            .httpBasic(HttpBasicConfigurer::disable)
+            .sessionManagement(sessionManagement -> sessionManagement
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(request -> request
+                    .requestMatchers
+                            ("/", "/api/v1/auth/**", "/api/v1/search/**", "/file/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/*").permitAll()
+                    .anyRequest().authenticated()
+            )
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                    .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
+            )
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-		return httpSecurity.build();
+    return httpSecurity.build();
 
-	}
+  }
 
-	@Bean
-	protected CorsConfigurationSource corsConfigrationSource() {
+  @Bean
+  protected CorsConfigurationSource corsConfigrationSource() {
 
-		CorsConfiguration configuration = new CorsConfiguration();
+    CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.addAllowedOrigin("*");
-		configuration.addAllowedMethod("*");
-		configuration.addExposedHeader("*");
+    configuration.addAllowedOrigin("*");
+    configuration.addAllowedMethod("*");
+    configuration.addExposedHeader("*");
 
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
 
-		return source;
+    return source;
 
-	}
+  }
 }
 
-	class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
-		@Override
-		public void commence(
-			HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws
-			IOException, ServletException {
-			response.setContentType("application/json");
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			response.getWriter().write("{\"code\":\"AF\", \"message\": \"Authorization Failed\" }");
-		}
-	}
+class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
+  @Override
+  public void commence(
+          HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws
+          IOException, ServletException {
+    response.setContentType("application/json");
+    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+    response.getWriter().write("{\"code\":\"AF\", \"message\": \"Authorization Failed\" }");
+  }
+}
 
 
