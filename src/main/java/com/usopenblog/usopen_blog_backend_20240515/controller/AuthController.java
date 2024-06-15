@@ -13,12 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-//  @GetMapping("/test")
-//  public String test() {
-//    return "test";
-//  }
-
-
   private final AuthService authService;
 
   @PostMapping("/sign-up")
