@@ -1,9 +1,12 @@
 package com.usopenblog.usopen_blog_backend_20240515.service.implement;
 
+import com.usopenblog.usopen_blog_backend_20240515.dto.request.auth.SignInRequestDto;
 import com.usopenblog.usopen_blog_backend_20240515.dto.request.auth.SignUpRequestDto;
 import com.usopenblog.usopen_blog_backend_20240515.dto.response.ResponseDto;
+import com.usopenblog.usopen_blog_backend_20240515.dto.response.auth.SignInResponseDto;
 import com.usopenblog.usopen_blog_backend_20240515.dto.response.auth.SignUpResponseDto;
 import com.usopenblog.usopen_blog_backend_20240515.entity.UserEntity;
+import com.usopenblog.usopen_blog_backend_20240515.provider.JwtProvider;
 import com.usopenblog.usopen_blog_backend_20240515.repository.UserRepository;
 import com.usopenblog.usopen_blog_backend_20240515.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +20,9 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImplement implements AuthService {
 
   private final UserRepository userRepository;
+  private final JwtProvider jwtProvider;
 
-  private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   @Override
   public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
@@ -49,4 +53,34 @@ public class AuthServiceImplement implements AuthService {
     }
     return SignUpResponseDto.success();
   }
+
+  @Override
+  public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+    String token = null;
+
+    try {
+      String email = dto.getEmail();
+      UserEntity userEntity = userRepository.findByEmail(email);
+      if (userEntity == null) return SignInResponseDto.signInFailed();
+
+      String password = dto.getPassword();
+      String encodedPassword = userEntity.getPassword();
+      boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+      if (!isMatched) return SignInResponseDto.signInFailed();
+
+      token = jwtProvider.create(email);
+
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+    return SignInResponseDto.success(token);
+  }
 }
+
+
+
+
+
+
+
