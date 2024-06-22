@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/auth")
 // 생성자를 자동으로 생성
 @RequiredArgsConstructor
+// Controller에는 비즈니스 로직이 구현이 되면 안된다. 서비스 레이어드에 진행을 해야하며, 입력을 받고 검증처리를 하는 구역이다.
 public class AuthController {
 
   //authService 필드 생성, 컨트롤러에서 처리된 요청을 service로 넘기기 위함.
