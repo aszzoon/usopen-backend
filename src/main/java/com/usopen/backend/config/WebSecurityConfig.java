@@ -1,7 +1,6 @@
 package com.usopen.backend.config;
 
 import java.io.IOException;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,23 +16,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import com.usopen.backend.filter.JwtAuthenticationFilter;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+//객체를 생성해서 관리한다
 @Configuration
+//시큐리티 설정과, 보안설정을 정의 하는데 활용
 @EnableWebSecurity
+//파라미터로 받는 생성자를 자동으로 생성하게 한다
 @RequiredArgsConstructor
+// 접근제한자, 클래스, 클래스명
 public class WebSecurityConfig {
 
+  //jwtAuthenticationFilter 필드 생성
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+  //객체 생성 하여 스프링 컨테이너에 빈으로 등록 하게 한다. 메서드 레벨에서 적용
   @Bean
+  //접근제한자, 반환타입, 메서드 이름,(참조타입, 파라미터) Exception 처리
   protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+
     httpSecurity
             .cors(cors -> cors
                     .configurationSource(corsConfigrationSource())
@@ -54,7 +59,6 @@ public class WebSecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     return httpSecurity.build();
-
   }
 
   @Bean

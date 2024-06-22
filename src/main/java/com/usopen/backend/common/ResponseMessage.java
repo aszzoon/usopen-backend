@@ -1,5 +1,6 @@
 package com.usopen.backend.common;
 
+// respons 시 확인 되는 메세지를 공통으로 묶어 관리한다.
 public interface ResponseMessage {
 	// HTTP Status 200
 	String SUCCESS = "Success.";

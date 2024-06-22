@@ -1,6 +1,6 @@
 package com.usopen.backend.common;
 
-// response
+// respons 시 확인 되는 코드를 공통으로 묶어 관리한다.
 public interface ResponseCode {
 
 	// HTTP Status 200
