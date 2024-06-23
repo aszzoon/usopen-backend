@@ -1,6 +1,7 @@
 package com.usopen.backend.config;
 
 import java.io.IOException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -41,7 +42,7 @@ public class WebSecurityConfig {
 
     httpSecurity
             .cors(cors -> cors
-                    .configurationSource(corsConfigrationSource())
+                    .configurationSource(corsConfigurationSource())
             )
             .csrf(CsrfConfigurer::disable)
             .httpBasic(HttpBasicConfigurer::disable)
@@ -49,8 +50,11 @@ public class WebSecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(request -> request
                     .requestMatchers
-                            ("/", "/api/v1/auth/**", "/api/v1/search/**", "/file/**").permitAll()
+                            ("/", "/api/v1/auth/**", "/api/v1/search/**", "/file/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/v1/board/**", "/api/v1/user/*").permitAll()
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                    .requestMatchers("/api-docs/**").permitAll()
+                    .requestMatchers("/api/authenticate").permitAll()
                     .anyRequest().authenticated()
             )
             .exceptionHandling(exceptionHandling -> exceptionHandling
@@ -62,7 +66,7 @@ public class WebSecurityConfig {
   }
 
   @Bean
-  protected CorsConfigurationSource corsConfigrationSource() {
+  protected CorsConfigurationSource corsConfigurationSource() {
 
     CorsConfiguration configuration = new CorsConfiguration();
 

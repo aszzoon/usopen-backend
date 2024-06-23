@@ -13,5 +13,5 @@ public interface AuthService {
 
   ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto Dto);
 
-  ResponseEntity<? super UserResponseDto> user(UserRequestDto Dto);
+  //ResponseEntity<? super UserResponseDto> user(UserRequestDto Dto);
 }
