@@ -35,15 +35,10 @@ public class SignInUserInfoResponsetDto extends ResponseDto {
     return ResponseEntity.status(HttpStatus.OK).body(result);
   }
 
-  //
+  //notExistUser(로그인 유저 정보 없을 시) 구현. 매개변수는 없다,
   public static ResponseEntity<ResponseDto> notExistUser() {
+    //ResponseDto 객체를 생성
     ResponseDto result = new ResponseDto(ResponseCode.NOT_EXISTED_USER, ResponseMessage.NOT_EXISTED_USER);
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
   }
-
-
-
-
-
-
 }
