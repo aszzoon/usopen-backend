@@ -11,6 +11,8 @@ import lombok.Getter;
 
 @Getter
 public class SignUpResponseDto extends ResponseDto {
+
+
 	private SignUpResponseDto() {
 		super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
 	}

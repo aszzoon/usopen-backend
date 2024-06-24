@@ -5,7 +5,6 @@ import com.usopen.backend.dto.request.auth.SignUpRequestDto;
 import com.usopen.backend.dto.response.ResponseDto;
 import com.usopen.backend.dto.response.auth.SignInResponseDto;
 import com.usopen.backend.dto.response.auth.SignUpResponseDto;
-import com.usopen.backend.dto.response.user.UserResponseDto;
 import com.usopen.backend.entity.UserEntity;
 import com.usopen.backend.provider.JwtProvider;
 import com.usopen.backend.repository.UserRepository;
