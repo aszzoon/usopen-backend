@@ -1,5 +1,5 @@
 # Project Introduction
-웹 애플리케이션 back-end를 구성 하였습니다.\
+웹 애플리케이션 back-end를 구성 하였습니다.
 * 회원가입(POST API)
 * 로그인(POST API)
 * 로그인 회원 정보(GET API)
