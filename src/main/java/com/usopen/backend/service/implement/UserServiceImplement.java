@@ -27,7 +27,7 @@ public class UserServiceImplement implements UserService {
     // null 값 대입
     UserEntity userEntity = null;
 
-    // ~ 일때 아래 조건 실행
+    // 예외처리를 위한 try-catch 블록
     try {
       //userEntity에 userRepository.findByEmail(email)을 대입
       userEntity = userRepository.findByEmail(email);
@@ -42,7 +42,7 @@ public class UserServiceImplement implements UserService {
       return ResponseDto.databaseError();
     }
 
-    //
+    //성공 시, SignInUserInfoResponsetDto.success(userEntity) return
     return SignInUserInfoResponsetDto.success(userEntity);
   }
 }
