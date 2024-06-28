@@ -10,16 +10,15 @@ import org.springframework.context.annotation.Bean;
 @Configurable
 public class OepnAPIConfiguration {
 
-  private static final String API_NAME = "Oepn API";
+  private static final String API_NAME = "웹 게시판 API";
   private static final String API_VERSION = "1.0.0";
   private static final String API_DESCRIPTION = "웹 게시판 API";
 
   @Bean
   public OpenAPI OpenAPIConfig() {
     return new OpenAPI()
-            .info(new Info().title("USOPEN")
-
-
+            .info(new Info()
+                    .title("USOPEN")
                     .description("웹 게시판 API").version("1.0.0"));
   }
 
