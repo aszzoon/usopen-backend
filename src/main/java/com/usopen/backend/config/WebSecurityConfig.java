@@ -54,6 +54,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                     .requestMatchers("/api-docs/**").permitAll()
                     .requestMatchers("/api/authenticate").permitAll()
+                    //.requestMatchers("/public/**").permitAll()
                     .anyRequest().authenticated()
             )
             .exceptionHandling(exceptionHandling -> exceptionHandling

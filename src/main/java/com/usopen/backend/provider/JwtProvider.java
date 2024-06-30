@@ -7,6 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,13 +19,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtProvider {
 
-  //
-  @Value("${secret-key}")
+  @Value("${secretKey}")
   private String secretKey;
 
   //email을 받아와서 웹토큰 만들기
   public String create(String email) {
-
+    System.out.println("secretkey");
     //Json 만료기간 만들기
     Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
     Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
