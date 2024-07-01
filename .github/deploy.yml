@@ -1,20 +1,25 @@
-#name: Deploy to EC2
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#jobs:
-#  Deploy:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name : SSH(원격 접속)로 EC2에 접속하기
-#        uses: appleboy/ssh-action@v1.0.3
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ${{ secrets.EC2_USERNAME }}
-#          key: ${{ secrets.EC2_PRIMARY_KEY }}
-#          script_stop: true
-#          script: |
-#
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name : SSH(원격 접속)로 EC2에 접속하기
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIMARY_KEY }}
+          script_stop: true
+          script: |
+            cd /home/ubuntu/usopen-server
+            git pull origin main
+            /.gradle clean build
+            sudo fuser -k -n tcp 8080 || true
+            nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
+
