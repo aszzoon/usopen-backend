@@ -2,6 +2,7 @@ package com.usopen.backend.config;
 
 import java.io.IOException;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
