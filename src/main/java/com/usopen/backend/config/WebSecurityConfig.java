@@ -34,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig {
 
 
+
   //jwtAuthenticationFilter 필드 생성
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
