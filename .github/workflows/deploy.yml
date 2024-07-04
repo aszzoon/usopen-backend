@@ -9,24 +9,47 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Github Repository에 올린 파일들을 불러오기
+        uses: actions/checkout@v4
+
+      - name: JDK 17버전 설치
+        uses: actions/setup-java@v4
+        with :
+          distribution: temutin
+          java-version: 17
+
+      - name: application.properties 파일 만들기
+        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resource/application.properties
+
+      - name: 테스트 및 빌드하기
+        run: ./gradlew clean build
+
+      - name: 빌드된 파일 이름 변경하기
+        run: mv ./build/libs/*SNAPSHOT.jar ./project.jar
+
+      - name: SCP로 EC2에 빌드된 파일 전송하기
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secret.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: project.jar
+          target: /home/ubuntu/usopen-backend/tobe
+
       - name : SSH(원격 접속)로 EC2에 접속하기
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
+          envs: APPLICATION_PROPERTIES
           script_stop: true
           script: |
-            set -e
-            echo "Changing directory to project folder"
-            cd /home/ubuntu/usopen-backend
-            echo "Pulling latest code from Git"
-            git pull origin main
-            echo "Building project with Gradle"
-            ./gradlew clean build
-            echo "Killing process on port 8080"
+            rm -rf /home/ubuntu/usopen-backend/current
+            mkdir /home/ubuntu/usopen-backend/current
+            mv /home/ubuntu/usopen-backend/tobe/project.jar /home/ubuntu/usopen-backend/current/project.jar
+            cd /home/ubuntu/usopen-backend/current
             sudo fuser -k -n tcp 8080 || true
-            echo "Starting application"
-            nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
-            disown
-            echo "Deployment completed"
+            nuhup java -jar project.jar > ./output.log 2>&1 &
+            rm -rf /home/ubuntu/usopen-backend/tobe
+            
