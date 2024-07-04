@@ -28,6 +28,7 @@ jobs:
       #      - name: 빌드된 파일 이름 변경하기
       #        run: mv ./build/libs/*SNAPSHOT.jar ./project.jar
       #
+
       #      - name: 압축하기
       #        run: tar -czvf $GITHUB_SHA.tar.gz project.jar appspec.yml scripts
 
