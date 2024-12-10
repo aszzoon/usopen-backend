@@ -24,8 +24,10 @@ public class AuthController {
 
   //http post 요청 처리(/sign-up)으로 요청시 호출됨
   @PostMapping("/sign-up")
-  public ResponseEntity<? super SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestBody) {
-    ResponseEntity<? super SignUpResponseDto> response = authService.signUp(requestBody);
+  public ResponseEntity<? super SignUpResponseDto>
+  signUp(@RequestBody @Valid SignUpRequestDto requestBody) {
+    ResponseEntity<? super SignUpResponseDto> response
+            = authService.signUp(requestBody);
     return response;
   }
 
